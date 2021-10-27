@@ -3,41 +3,42 @@ import  * as React from 'react';
 import { StyleSheet, Text, View, Image, Button } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import Home from '../components/Home';
-import SignUp from '../components/SignUp';
+import Home from '../screens/Home';
+import SignUp from '../screens/SignUp';
+import Profile from '../screens/Profile';
+import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs'
 
 const Stack = createNativeStackNavigator();
+const TopStack = createMaterialTopTabNavigator();
 
-export default function Navbar({navigation}) {
-    return (
-        <View>
-        <NavigationContainer>
-            <Stack.Navigator initialRouteName="Home">
-            <Stack.Screen name="Home" component={Home} />
-            <Stack.Screen name="Sign Up" component={SignUp} />
-            </Stack.Navigator>                
-        </NavigationContainer>
-        <Button
-            title="Sign Up!"
-            onPress={()=> this.props.navigation.navigate('Sign Up')}
-            />
-        <Button
-            title="Home!"
-            onPress={()=> this.props.navigation.navigate('Home')}/> 
-      </View>
-      
+export default function Navbar({}) {
+    return (        
+      <NavigationContainer>
+      <TopStack.Navigator
+        initialRouteName="Home"
+      >
+        <TopStack.Screen name="Home" children={Home}/>
+        <TopStack.Screen name="Sign Up" children={stackSignUp}/>
+      </TopStack.Navigator>
+    </NavigationContainer>   
+    );
+  }  
+
+  
+  function stackSignUp(){
+    return(
+      <Stack.Navigator>
+        <Stack.Screen 
+        name="Sign up screen"
+        component={SignUp}/>        
+        <Stack.Screen 
+        name="Profile"
+        component={Profile}/>        
+      </Stack.Navigator>
     );
   }
-  /**<NavigationContainer>
-      <Stack.Navigator initialRouteName="Home">
-        <Stack.Screen name="Home" component={Home} />
-        <Stack.Screen name="Sign Up" component={SignUp}/>
-      </Stack.Navigator>  
-    </NavigationContainer> */
+  
   
   const styles = StyleSheet.create({    
-    logo :{
-      width:300,
-      height:120
-    }
+    
   });
