@@ -2,11 +2,9 @@ import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { StyleSheet, Text, View, Image, Button, ScrollView } from 'react-native';
 import Logo from '../components/Logo';
-//import Carousel from 'react-native-snap-carousel';
-import NumberCarousel from '../components/Carousel';
 import ImageCarousel from '../components/ImageCarousel';
 
-export default function Home({navigation}) {
+export default function Home({navigation}) {  
     return (
       <ScrollView style={styles.container}>
         <Logo/>

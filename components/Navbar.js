@@ -17,8 +17,8 @@ export default function Navbar({}) {
       <TopStack.Navigator
         initialRouteName="Home"
       >
-        <TopStack.Screen name="Home" children={Home}/>
-        <TopStack.Screen name="Sign Up" children={stackSignUp}/>
+        <TopStack.Screen name="Home" component={Home}/>
+        <TopStack.Screen name="Sign Up" component={stackSignUp}/>
       </TopStack.Navigator>
     </NavigationContainer>   
     );
@@ -29,11 +29,12 @@ export default function Navbar({}) {
     return(
       <Stack.Navigator>
         <Stack.Screen 
-        name="Sign up screen"
-        component={SignUp}/>        
+          name="Sign up screen"
+          screenOptions= {{headerShown : false}}
+          component={SignUp}/>        
         <Stack.Screen 
-        name="Profile"
-        component={Profile}/>        
+          name="Profile"         
+          component={Profile}/>        
       </Stack.Navigator>
     );
   }
