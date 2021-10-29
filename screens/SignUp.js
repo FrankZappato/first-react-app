@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { render } from 'react-dom';
-import { StyleSheet, Text, View, Image, Button, TextInput, ScrollView, Animated } from 'react-native';
+import { StyleSheet, Text, View, Image, Button, TextInput, ScrollView, Animated, Alert } from 'react-native';
 import Logo from '../components/Logo';
 import { useNavigation } from '@react-navigation/core';
-
+import { Input } from 'react-native-elements';
+import * as Animatable from 'react-native-animatable';
 //const navigation = useNavigation();
 
 export default function SignUp ({navigation}){     
@@ -24,14 +25,7 @@ export default function SignUp ({navigation}){
    });
 
    const emailRegex = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
-   const dniRegex = new RegExp(/^\d{8}(?:[-\s]\d{4})?$/);
-   /*const handleChange = (event,type)=>{       
-       setstate((currentState)=>{return{
-           ...state,[type] : event.nativeEvent.text
-           
-       }})
-       console.log(state)
-   }*/
+   const dniRegex = new RegExp(/^\d{8}(?:[-\s]\d{4})?$/);   
 
    const handleInput = (val,key) =>{    
         setstate({
@@ -116,49 +110,92 @@ export default function SignUp ({navigation}){
             });
         }       
    }
+
+   const errorsArr = []
+
+   const validateAll = ()=>{          
+       Object.entries(validations).forEach(([key,val]) =>{
+           if(!val){
+               errorsArr.push(key)
+           }
+       })      
+   }
+   const validData = ()=>{  
+       validateAll() 
+       console.log(errorsArr.length) 
+       return errorsArr.length === 0
+   }
+
+   const showError = ()=>{       
+       Alert.alert(
+        "Input Error",  
+        "Datos invalidos "+ errorsArr,      
+        [
+          {
+            text: "Cancel",           
+            style: "cancel",
+          },
+        ],
+        {
+          cancelable: true,
+        }
+      );
+       errorsArr.forEach(error =>{
+           console.log(error);
+       })      
+   }
+
     return (        
         <ScrollView style={styles.formContainer}>
             <Logo/>
             <Text>Sign up!</Text>   
-            <TextInput
+            <Input
+                label="Nombre"
                 placeholder=" Nombre"
                 style={styles.formInput}
-                onChangeText={(val)=>handleInput(val,'nombre')}                
-            />
-            {validations.isValidName ? null : 
-            <View duration={500}>           
-                <Text>Nombre debe contener al menos 4 caracteres</Text>     
-            </View>       
-            }
-            <TextInput
+                onChangeText={(val)=>handleInput(val,'nombre')}
+                                         
+            />        
+            
+            <Input
+                label="Apellido"
                 placeholder=" Apellido"
                 style={styles.formInput}
                 onChangeText={(val)=>handleInput(val, 'apellido')}
             />
-            <TextInput
+            <Input
+                label="Email"
                 placeholder=" Email"
                 style={styles.formInput}
                 onChangeText={(val)=>handleInput(val,'email')}
             />
-            <TextInput
+            <Input
+                label="Fecha de nacimiento"
                 placeholder=" Fecha de nacimiento"
                 style={styles.formInput}
                 onChangeText={(val)=>handleInput(val,"edad")}
-            />
-            <TextInput
+            />            
+            <Input
+                label =" DNI"
                 placeholder=" DNI"
                 style={styles.formInput}
                 onChangeText={(val)=>handleInput(val,'dni')}
-            />            
+            />          
         <Button 
             title="Sign Up"
-            onPress={() =>
-                  navigation.navigate('Sign Up', {
-                  screen: 'Profile',
-                  params: { data: {state,validations} },
-                })
-              }
-        />
+            onPress={() => 
+                {                    
+                    if(validData()){                        
+                        navigation.navigate('Sign Up', {
+                        screen: 'Profile',
+                        params: { data: {state,validations} },
+                        })
+                    }else{                        
+                        showError();
+                    }
+                }                
+            }
+        />        
         </ScrollView>
     ); 
 }
@@ -174,5 +211,5 @@ const styles = StyleSheet.create({
         borderRadius : 5,
         borderColor : '#007A7A',
         margin : 15
-    }     
+    }    
   });
