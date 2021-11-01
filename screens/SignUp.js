@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
-import { render } from 'react-dom';
-import { StyleSheet, Text, View, Image, Button, TextInput, ScrollView, Animated, Alert } from 'react-native';
+import { StyleSheet, Text, View, Image, Button, TextInput, ScrollView, Alert } from 'react-native';
 import Logo from '../components/Logo';
-import { useNavigation } from '@react-navigation/core';
 import { Input } from 'react-native-elements';
 import * as Animatable from 'react-native-animatable';
-//import DatePicker from 'react-native-date-picker';
+import DateTimePicker from '@react-native-community/datetimepicker';
 
 export default function SignUp ({navigation}){     
    const [state, setstate] = useState({
@@ -17,14 +15,46 @@ export default function SignUp ({navigation}){
    });
 
    const [validations,setValid] = useState({ 
-        isValidName : true,
-        isValidLastName : true,
-        isValidEmail : true,
-        isValidDate : true,
-        isValidDNI : true
-   });
+        isValidName : false,
+        isValidLastName : false,
+        isValidEmail : false,
+        isValidDate : false,
+        isValidDNI : false
+   });  
+   
+   /*const [date, setDate] = useState(new Date(1598051730000));
+   const [mode, setMode] = useState('calendar');
+   const [show, setShow] = useState(false);
 
-  // const [date,setDate] = useState(new Date())
+   const showMode = (currentMode) => {
+    setShow(true);
+    setMode(currentMode);
+  };
+
+  const showDatepicker = () => {
+    showMode('calendar');
+  };
+  const onChangeDate = (event, selectedDate) => {
+    const currentDate = selectedDate || date;
+    setShow(Platform.OS === 'ios');
+    setDate(currentDate);
+    console.log(date)
+  };
+    <View>
+        <View>
+        <Button onPress={showDatepicker} title="Show date picker!" />
+        </View>            
+        {show && (
+        <DateTimePicker
+            testID="dateTimePicker"
+            value={date}
+            mode={mode}
+            is24Hour={true}
+            display="default"
+            onChange={onChangeDate}
+        />
+        )}
+    </View>*/
 
 
    const emailRegex = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
@@ -56,8 +86,9 @@ export default function SignUp ({navigation}){
        }
    }
 
-   const checkNameInput = (val) =>{       
-       if(val.lenght !== 0){
+   const checkNameInput = (val) =>{   
+       console.log(val.lenght)    
+       if(val.lenght !== '0'){
            setValid({
                ...validations,
                isValidName : true
@@ -84,7 +115,17 @@ export default function SignUp ({navigation}){
    }   
    
    const checkAgeInput = (val) =>{
-
+    if(val.lenght !== 0){
+        setValid({
+            ...validations,
+            isValidDate : true
+        })
+    }else{
+        setValid({
+            ...validations,
+            isValidDate : false 
+        })
+    }
    }
    const checkDNIInput = (val) =>{
         if(dniRegex.test(val)){
@@ -114,12 +155,13 @@ export default function SignUp ({navigation}){
         }       
    }
 
-   const errorsArr = []
+   let errorsArr = []
 
-   const validateAll = ()=>{          
+   const validateAll = ()=>{  
+       errorsArr = [];        
        Object.entries(validations).forEach(([key,val]) =>{
            if(!val){
-               errorsArr.push(key)
+               errorsArr.push(key.replace('isValid', ''))
            }
        })      
    }
@@ -173,7 +215,8 @@ export default function SignUp ({navigation}){
                 placeholder=" Email"
                 style={styles.formInput}
                 onChangeText={(val)=>handleInput(val,'email')}
-            />
+            />           
+            
             <Input
                 label="Fecha de nacimiento"
                 placeholder=" Fecha de nacimiento"
@@ -189,8 +232,9 @@ export default function SignUp ({navigation}){
             />          
         <Button 
             title="Sign Up"
-            onPress={() => 
-                {                    
+            onPress={() =>                 
+                {          
+                            
                     if(validData()){                        
                         navigation.navigate('Sign Up', {
                         screen: 'Profile',

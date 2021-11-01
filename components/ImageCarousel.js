@@ -14,12 +14,6 @@ import SimplePaginationDot from './SimplePaginationDot';
 
 const {width: windowWidth} = Dimensions.get('window');
 
-
-/**
- * 'https://images.pexels.com/photos/9896251/pexels-photo-9896251.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
-    'https://images.pexels.com/photos/8956156/pexels-photo-8956156.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
-    'https://images.pexels.com/photos/9336641/pexels-photo-9336641.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'
- */
 const data2 = [
     {
         uri: 'https://images.pexels.com/photos/9896251/pexels-photo-9896251.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'
@@ -101,7 +95,7 @@ export default function ImageCarousel(props) {
         onScrollEnd={handleCarouselScrollEnd}
         ref={carouselRef}
       />
-      <SimplePaginationDot currentIndex={currentIndex} length={data.length} />
+      <SimplePaginationDot currentIndex={currentIndex} length={data2.length} />
     </View>
   );
 }

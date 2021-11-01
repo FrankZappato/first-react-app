@@ -1,26 +1,52 @@
-import { NavigationContainer } from '@react-navigation/native'
 import React from 'react'
 import { Button, StyleSheet, Text, View } from 'react-native'
 
-const Profile = ({route , navigation}) => {
-    console.log("AAAAAA",route)
-    //const data = props.route.params.nombre;
+const Profile = ({route , navigation}) => {    
     return (
         <View>
             <Button
             title="Go back"
             onPress={()=>{navigation.goBack()}}
-            />
-            <Text>Nombre : {route.params.data.state.nombre}</Text>
-            <Text>Apellido : {route.params.data.state.apellido}</Text>
-            <Text>Email : {route.params.data.state.email}</Text>
-            <Text>Password : {route.params.data.state.edad}</Text>
-            <Text>DNI : {route.params.data.state.dni}</Text>
-            <Text>Profile!</Text>
+            />            
+            <View style={styles.profileData}>
+                <View style={styles.textContainer}>
+                    <Text style={styles.profileText}>Nombre :</Text> 
+                    <Text> {route.params.data.state.nombre}</Text>
+                </View>
+                <View style={styles.textContainer}>
+                    <Text style={styles.profileText}>Apellido :</Text> 
+                    <Text>{route.params.data.state.apellido}</Text>
+                </View>
+                <View style={styles.textContainer}>
+                    <Text style={styles.profileText}>Email : </Text> 
+                    <Text> {route.params.data.state.email}</Text>
+                </View>
+                <View style={styles.textContainer}>
+                    <Text style={styles.profileText}>Edad : </Text> 
+                    <Text> {route.params.data.state.edad}</Text>
+                </View>
+                <View style={styles.textContainer}>
+                    <Text style={styles.profileText}>DNI :</Text> 
+                    <Text>{route.params.data.state.dni}</Text>    
+                </View>            
+            </View>
         </View>
     )
 }
 
 export default Profile
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+    profileData : {
+        justifyContent : 'center',
+        alignItems : 'center'
+    },
+    profileText : {
+        fontWeight : 'bold'
+    },
+    textContainer : {
+        display : 'flex',
+        flexDirection : 'row'
+    }
+    
+})
