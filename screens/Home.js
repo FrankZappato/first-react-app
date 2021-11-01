@@ -7,8 +7,10 @@ import ImageCarousel from '../components/ImageCarousel';
 export default function Home({navigation}) {  
     return (
       <ScrollView style={styles.container}>
-        <Logo/>
-        <Text>Bienvenido a netthis!</Text>            
+        <View style={styles.headerContainer}>
+          <Logo/>
+          <Text style={styles.title}>Bienvenido a netthis!</Text>            
+        </View>
         <ImageCarousel/>                         
         <StatusBar style="auto" />  
       </ScrollView>
@@ -18,18 +20,20 @@ export default function Home({navigation}) {
   const styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: '#fff',
-      //alignItems: 'center',
-      //justifyContent: 'center',
-    },
-    logo :{
-      width:300,
-      height:120
-    },
+      backgroundColor: '#fff',     
+    },    
     header : {
         display:'flex',
         marginTop : 15,
         alignContent:'center',
         justifyContent: 'center'
+    },
+    headerContainer : {
+      justifyContent : 'center',      
+      alignItems : 'center'
+    },
+    title : {
+      fontWeight : 'bold',
+      fontSize : 20
     }
   });

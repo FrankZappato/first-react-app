@@ -5,7 +5,7 @@ import Logo from '../components/Logo';
 import { useNavigation } from '@react-navigation/core';
 import { Input } from 'react-native-elements';
 import * as Animatable from 'react-native-animatable';
-//const navigation = useNavigation();
+//import DatePicker from 'react-native-date-picker';
 
 export default function SignUp ({navigation}){     
    const [state, setstate] = useState({
@@ -23,6 +23,9 @@ export default function SignUp ({navigation}){
         isValidDate : true,
         isValidDNI : true
    });
+
+  // const [date,setDate] = useState(new Date())
+
 
    const emailRegex = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
    const dniRegex = new RegExp(/^\d{8}(?:[-\s]\d{4})?$/);   
@@ -147,8 +150,10 @@ export default function SignUp ({navigation}){
 
     return (        
         <ScrollView style={styles.formContainer}>
-            <Logo/>
-            <Text>Sign up!</Text>   
+            <View style={styles.headerContainer}>
+                <Logo/>
+                <Text style={styles.title}>Sign up!</Text>   
+            </View>
             <Input
                 label="Nombre"
                 placeholder=" Nombre"
@@ -174,7 +179,8 @@ export default function SignUp ({navigation}){
                 placeholder=" Fecha de nacimiento"
                 style={styles.formInput}
                 onChangeText={(val)=>handleInput(val,"edad")}
-            />            
+            />      
+              
             <Input
                 label =" DNI"
                 placeholder=" DNI"
@@ -211,5 +217,13 @@ const styles = StyleSheet.create({
         borderRadius : 5,
         borderColor : '#007A7A',
         margin : 15
+    },
+    headerContainer : {
+        justifyContent : 'center',      
+        alignItems : 'center'
+      },
+    title : {
+        fontWeight : 'bold',
+        fontSize : 20
     }    
   });
