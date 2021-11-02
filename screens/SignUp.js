@@ -277,7 +277,7 @@ export default function SignUp ({navigation}){
                 <Spinner                
                 visible={loading}                
                 textContent={'Loading...'}                
-                textStyle={styles.spinnerTextStyle}
+                textStyle={{color :'#FFF'}}
                 />                
             </View>
             </SafeAreaView>

@@ -1,7 +1,8 @@
 import React from 'react'
-import { Button, StyleSheet, Text, View } from 'react-native'
+import { Button, Text, View } from 'react-native'
+import styles from './styles/profileStyle'
 
-const Profile = ({route , navigation}) => {    
+export default Profile = ({route , navigation}) => {    
     return (
         <View>
             <Button
@@ -33,20 +34,3 @@ const Profile = ({route , navigation}) => {
         </View>
     )
 }
-
-export default Profile
-
-const styles = StyleSheet.create({
-    profileData : {
-        justifyContent : 'center',
-        alignItems : 'center'
-    },
-    profileText : {
-        fontWeight : 'bold'
-    },
-    textContainer : {
-        display : 'flex',
-        flexDirection : 'row'
-    }
-    
-})

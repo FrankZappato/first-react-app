@@ -58,8 +58,7 @@ export default  StyleSheet.create({
     formTitle : {
         color : "#86939e",
         fontWeight : 'bold',
-        fontSize : 16,
-        fontFamily : "-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif"
+        fontSize : 16        
     },
     formInputDate : {
         borderWidth : 2,
