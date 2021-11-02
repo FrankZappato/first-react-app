@@ -9,7 +9,7 @@ export default function Home({navigation}) {
       <ScrollView style={styles.container}>
         <View style={styles.headerContainer}>
           <Logo/>
-          <Text style={styles.title}>Bienvenido a netthis!</Text>            
+          <Text style={styles.title}>Bienvenido a neTThis!</Text>            
         </View>
         <ImageCarousel/>                         
         <StatusBar style="auto" />  
@@ -34,6 +34,7 @@ export default function Home({navigation}) {
     },
     title : {
       fontWeight : 'bold',
-      fontSize : 20
+      fontSize : 25,
+      marginBottom : 10
     }
   });

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, SafeAreaView, ScrollView, Alert, TextInput } from 'react-native';
+import { Text, View, SafeAreaView, ScrollView, Alert, TextInput } from 'react-native';
 import { Button } from 'react-native-elements';
 import Logo from '../components/Logo';
 import { Input } from 'react-native-elements';
@@ -7,6 +7,7 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import Spinner from 'react-native-loading-spinner-overlay';
 import moment from 'moment';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import styles from './styles/signUpStyle';
 
 export default function SignUp ({navigation}){     
    const [state, setState] = useState({
@@ -198,20 +199,20 @@ export default function SignUp ({navigation}){
             </View>
             <Input
                 label="Nombre"
-                placeholder=" Nombre"
+                placeholder="  Nombre"
                 style={styles.formInput}
                 onChangeText={(val)=>handleInput(val,'nombre')}                                         
             />        
             
             <Input
                 label="Apellido"
-                placeholder=" Apellido"
+                placeholder="  Apellido"
                 style={styles.formInput}
                 onChangeText={(val)=>handleInput(val, 'apellido')}
             />
             <Input
                 label="Email"
-                placeholder=" Email"
+                placeholder="  Email"
                 style={styles.formInput}
                 onChangeText={(val)=>handleInput(val,'email')}
             /> 
@@ -221,7 +222,7 @@ export default function SignUp ({navigation}){
                     <TextInput                        
                         label = "Fecha de Nacimiento"
                         style={styles.formInputDate}
-                        placeholder = 'DD/MM/YYYY'
+                        placeholder = "DD/MM/YYYY"
                         value = {state.edad}                        
                     />        
                     <Button 
@@ -254,8 +255,8 @@ export default function SignUp ({navigation}){
                    
               
             <Input
-                label =" DNI"
-                placeholder=" DNI"
+                label ="DNI"
+                placeholder="  DNI"
                 style={styles.formInput}
                 onChangeText={(val)=>handleInput(val,'dni')}
             />          
@@ -271,7 +272,7 @@ export default function SignUp ({navigation}){
                 }                
             }
         />        
-        <SafeAreaView style={{flex: 1}}>
+        <SafeAreaView styles={{flex: 1}}>
             <View style={styles.container}>
                 <Spinner                
                 visible={loading}                
@@ -283,70 +284,3 @@ export default function SignUp ({navigation}){
         </ScrollView>
     ); 
 }
-
-const styles = StyleSheet.create({
-    formContainer : {
-        margin : 20,
-        marginTop : 80,       
-        alignContent : 'center'
-    },
-    formInput : {
-        borderWidth : 2,
-        borderRadius : 5,
-        borderColor : '#007A7A',
-        margin : 15,
-        
-    },
-    headerContainer : {
-        justifyContent : 'center',      
-        alignItems : 'center'
-      },
-    title : {
-        fontWeight : 'bold',
-        fontSize : 20
-    } ,
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        textAlign: 'center',
-        paddingTop: 30,
-        backgroundColor: '#ecf0f1',
-        padding: 8,
-    },
-    spinnerTextStyle: {
-        color: '#FFF',
-    }, 
-    formDateContainer : {
-        display : 'flex',
-        flexDirection : 'row',
-        justifyContent : 'center',
-        alignContent : 'center',
-        margin: 15
-    } ,
-    formInputContainer :{
-       borderBottomWidth : 2,
-       borderBottomColor : '#86939e',
-       marginLeft : 14,
-       marginRight : 14,
-       marginBottom : 15      
-    },
-    calendarBtn :{
-       minHeight : 36,
-       minWidth : 50,
-       color :'#007A7A',
-       marginLeft : 5
-    },
-    formTitle : {
-        color : "#86939e",
-        fontWeight : 'bold',
-        fontSize : 16,
-        fontFamily : "-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif"
-    },
-    formInputDate : {
-        borderWidth : 2,
-        borderRadius : 5,
-        borderColor : '#007A7A',
-        width : '83%',
-        minHeight : 36
-    }
-  });
