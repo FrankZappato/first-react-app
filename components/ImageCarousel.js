@@ -74,10 +74,7 @@ export default function ImageCarousel(props) {
         onPress={() => {
           carouselRef.current.scrollToIndex(index);
         }}>
-        <ImageBackground source={{uri: uri}} style={styles.imageBackground}>
-          <View style={styles.rightTextContainer}>
-            <Text style={styles.rightText}>{index}</Text>
-          </View>
+        <ImageBackground source={{uri: uri}} style={styles.imageBackground}>          
         </ImageBackground>        
       </TouchableOpacity>
     );

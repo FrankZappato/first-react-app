@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, Image, Button, TextInput, ScrollView, Alert } from 'react-native';
+import { StyleSheet, Text, View, SafeAreaView, ScrollView, Alert, TextInput } from 'react-native';
+import { Button } from 'react-native-elements';
 import Logo from '../components/Logo';
 import { Input } from 'react-native-elements';
-import * as Animatable from 'react-native-animatable';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import Spinner from 'react-native-loading-spinner-overlay';
+import moment from 'moment';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 export default function SignUp ({navigation}){     
-   const [state, setstate] = useState({
+   const [state, setState] = useState({
        nombre : "",
        apellido : "",
        email : "",
@@ -22,46 +25,57 @@ export default function SignUp ({navigation}){
         isValidDNI : false
    });  
    
-   /*const [date, setDate] = useState(new Date(1598051730000));
-   const [mode, setMode] = useState('calendar');
-   const [show, setShow] = useState(false);
+   /**
+    * loading para el spinner.
+    */
+    const [loading, setLoading] = useState(false);
+   /**
+    * timeOut de 3 secs para navegar una ves validado que no haya errores en el form.
+    */
+    const startLoading = () => {
+        setLoading(true);
+        setTimeout(() => {
+            navigation.navigate('Sign Up', {
+                screen: 'Profile',
+                params: { data: {state,validations} },
+            })
+            setLoading(false);
+        }, 3000);
+    };
 
-   const showMode = (currentMode) => {
-    setShow(true);
-    setMode(currentMode);
-  };
+    /**
+     * DatePicker 
+     */
+    const [date, setDate] = useState(new Date());    
+    const [show, setShow] = useState(false);
+   
+    const onChangeDate = (event, selectedDate) => {       
+        setShow(false);        
+        setDate(selectedDate);
+        setState({
+            ...state,
+            edad : moment(selectedDate).format('DD/MM/YYYY')
+        });
+        setValid({
+            ...validations,
+            isValidDate : true
+        })                    
+    };    
 
-  const showDatepicker = () => {
-    showMode('calendar');
-  };
-  const onChangeDate = (event, selectedDate) => {
-    const currentDate = selectedDate || date;
-    setShow(Platform.OS === 'ios');
-    setDate(currentDate);
-    console.log(date)
-  };
-    <View>
-        <View>
-        <Button onPress={showDatepicker} title="Show date picker!" />
-        </View>            
-        {show && (
-        <DateTimePicker
-            testID="dateTimePicker"
-            value={date}
-            mode={mode}
-            is24Hour={true}
-            display="default"
-            onChange={onChangeDate}
-        />
-        )}
-    </View>*/
-
-
+    /**
+     * RegEx para filtrar y validar emails y DNI
+     */
    const emailRegex = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
    const dniRegex = new RegExp(/^\d{8}(?:[-\s]\d{4})?$/);   
-
+    
+   /**
+    * 
+    * @param {*Input Value} val 
+    * @param {*Key del obj state} key 
+    * handler para modificar los valores del obj "state" desde los inputs del form
+    */
    const handleInput = (val,key) =>{    
-        setstate({
+        setState({
             ...state,
             [key] : val,               
         });
@@ -77,18 +91,14 @@ export default function SignUp ({navigation}){
        }
        if(key === 'email'){
            checkEmailInput(val)
-       }
-       if(key === 'edad'){
-           checkAgeInput(val)
-       }
+       }       
        if(key === 'dni'){
            checkDNIInput(val)
        }
    }
 
-   const checkNameInput = (val) =>{   
-       console.log(val.lenght)    
-       if(val.lenght !== '0'){
+   const checkNameInput = (val) =>{         
+       if(val.lenght !== 0){
            setValid({
                ...validations,
                isValidName : true
@@ -112,21 +122,8 @@ export default function SignUp ({navigation}){
                isValidLastName : false 
            })
        }
-   }   
+   }  
    
-   const checkAgeInput = (val) =>{
-    if(val.lenght !== 0){
-        setValid({
-            ...validations,
-            isValidDate : true
-        })
-    }else{
-        setValid({
-            ...validations,
-            isValidDate : false 
-        })
-    }
-   }
    const checkDNIInput = (val) =>{
         if(dniRegex.test(val)){
             setValid({
@@ -155,6 +152,9 @@ export default function SignUp ({navigation}){
         }       
    }
 
+   /**
+    * array de errores que va a mostrar el modal si los hay luego de validar todos.
+    */
    let errorsArr = []
 
    const validateAll = ()=>{  
@@ -200,8 +200,7 @@ export default function SignUp ({navigation}){
                 label="Nombre"
                 placeholder=" Nombre"
                 style={styles.formInput}
-                onChangeText={(val)=>handleInput(val,'nombre')}
-                                         
+                onChangeText={(val)=>handleInput(val,'nombre')}                                         
             />        
             
             <Input
@@ -215,14 +214,44 @@ export default function SignUp ({navigation}){
                 placeholder=" Email"
                 style={styles.formInput}
                 onChangeText={(val)=>handleInput(val,'email')}
-            />           
-            
-            <Input
-                label="Fecha de nacimiento"
-                placeholder=" Fecha de nacimiento"
-                style={styles.formInput}
-                onChangeText={(val)=>handleInput(val,"edad")}
-            />      
+            /> 
+            <View style={styles.formInputContainer}>
+                <Text style={styles.formTitle}>Fecha de Nacimiento</Text>
+                <View style={styles.formDateContainer}> 
+                    <TextInput                        
+                        label = "Fecha de Nacimiento"
+                        style={styles.formInputDate}
+                        placeholder = 'DD/MM/YYYY'
+                        value = {state.edad}                        
+                    />        
+                    <Button 
+                        icon={
+                            <Icon
+                            name="calendar"
+                            size={22}
+                            color="#007A7A"
+                            />
+                        }
+                        buttonStyle={styles.calendarBtn}
+                        type = 'outline'                        
+                        onPress={()=>setShow(true)} 
+                    />
+                </View>
+            </View> 
+
+            <View>                           
+                {show && (
+                <DateTimePicker
+                    testID="dateTimePicker"
+                    value={date}
+                    mode={'calendar'}
+                    is24Hour={true}
+                    display="default"
+                    onChange={onChangeDate}
+                />
+                )}
+            </View>   
+                   
               
             <Input
                 label =" DNI"
@@ -233,19 +262,24 @@ export default function SignUp ({navigation}){
         <Button 
             title="Sign Up"
             onPress={() =>                 
-                {          
-                            
-                    if(validData()){                        
-                        navigation.navigate('Sign Up', {
-                        screen: 'Profile',
-                        params: { data: {state,validations} },
-                        })
+                {                                      
+                    if(validData()){ 
+                        startLoading()    
                     }else{                        
                         showError();
                     }
                 }                
             }
         />        
+        <SafeAreaView style={{flex: 1}}>
+            <View style={styles.container}>
+                <Spinner                
+                visible={loading}                
+                textContent={'Loading...'}                
+                textStyle={styles.spinnerTextStyle}
+                />                
+            </View>
+            </SafeAreaView>
         </ScrollView>
     ); 
 }
@@ -260,7 +294,8 @@ const styles = StyleSheet.create({
         borderWidth : 2,
         borderRadius : 5,
         borderColor : '#007A7A',
-        margin : 15
+        margin : 15,
+        
     },
     headerContainer : {
         justifyContent : 'center',      
@@ -269,5 +304,49 @@ const styles = StyleSheet.create({
     title : {
         fontWeight : 'bold',
         fontSize : 20
-    }    
+    } ,
+    container: {
+        flex: 1,
+        justifyContent: 'center',
+        textAlign: 'center',
+        paddingTop: 30,
+        backgroundColor: '#ecf0f1',
+        padding: 8,
+    },
+    spinnerTextStyle: {
+        color: '#FFF',
+    }, 
+    formDateContainer : {
+        display : 'flex',
+        flexDirection : 'row',
+        justifyContent : 'center',
+        alignContent : 'center',
+        margin: 15
+    } ,
+    formInputContainer :{
+       borderBottomWidth : 2,
+       borderBottomColor : '#86939e',
+       marginLeft : 14,
+       marginRight : 14,
+       marginBottom : 15      
+    },
+    calendarBtn :{
+       minHeight : 36,
+       minWidth : 50,
+       color :'#007A7A',
+       marginLeft : 5
+    },
+    formTitle : {
+        color : "#86939e",
+        fontWeight : 'bold',
+        fontSize : 16,
+        fontFamily : "-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif"
+    },
+    formInputDate : {
+        borderWidth : 2,
+        borderRadius : 5,
+        borderColor : '#007A7A',
+        width : '83%',
+        minHeight : 36
+    }
   });
