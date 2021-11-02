@@ -2,7 +2,7 @@ import React from 'react'
 import { Button, Text, View } from 'react-native'
 import styles from './styles/profileStyle'
 
-export default Profile = ({route , navigation}) => {    
+const  Profile = ({route , navigation}) => {    
     return (
         <View>
             <Button
@@ -34,3 +34,5 @@ export default Profile = ({route , navigation}) => {
         </View>
     )
 }
+
+export default Profile
