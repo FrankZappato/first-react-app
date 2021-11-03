@@ -34,5 +34,4 @@ const  Profile = ({route , navigation}) => {
         </View>
     )
 }
-
 export default Profile

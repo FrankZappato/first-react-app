@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
-import { Text, View, SafeAreaView, ScrollView, Alert, TextInput } from 'react-native';
-import { Button } from 'react-native-elements';
-import Logo from '../components/Logo';
-import { Input } from 'react-native-elements';
-import DateTimePicker from '@react-native-community/datetimepicker';
-import Spinner from 'react-native-loading-spinner-overlay';
-import moment from 'moment';
-import Icon from 'react-native-vector-icons/FontAwesome';
-import styles from './styles/signUpStyle';
+import React, { useState } from 'react'
+import { Text, View, SafeAreaView, ScrollView, Alert, TextInput } from 'react-native'
+import { Button } from 'react-native-elements'
+import Logo from '../components/Logo'
+import { Input } from 'react-native-elements'
+import DateTimePicker from '@react-native-community/datetimepicker'
+import Spinner from 'react-native-loading-spinner-overlay'
+import moment from 'moment'
+import Icon from 'react-native-vector-icons/FontAwesome'
+import styles from './styles/signUpStyle'
 
 export default function SignUp ({navigation}){     
    const [state, setState] = useState({
@@ -251,8 +251,7 @@ export default function SignUp ({navigation}){
                     onChange={onChangeDate}
                 />
                 )}
-            </View>   
-                   
+            </View>                    
               
             <Input
                 label ="DNI"

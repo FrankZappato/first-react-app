@@ -1,18 +1,18 @@
-import React, {useRef, useState} from 'react';
-import {
-  StyleSheet,
+import React, {useRef, useState} from 'react'
+import {  
   Text,
   TouchableOpacity,
   View,
   Dimensions,
   ImageBackground,
-} from 'react-native';
+} from 'react-native'
+import styles from './carouselStyle'
 
-import Carousel from 'react-native-anchor-carousel/src/carousel';
+import Carousel from 'react-native-anchor-carousel/src/carousel'
 
-import SimplePaginationDot from './SimplePaginationDot';
+import SimplePaginationDot from './SimplePaginationDot'
 
-const {width: windowWidth} = Dimensions.get('window');
+const {width: windowWidth} = Dimensions.get('window')
 
 const data2 = [
     {
@@ -88,7 +88,7 @@ export default function ImageCarousel(props) {
         renderItem={renderItem}
         itemWidth={0.7 * windowWidth}
         inActiveOpacity={0.3}
-        containerWidth={windowWidth}
+        containerWidth={windowWidth}        
         onScrollEnd={handleCarouselScrollEnd}
         ref={carouselRef}
       />
@@ -96,49 +96,3 @@ export default function ImageCarousel(props) {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {backgroundColor: '#141518', paddingVertical: 20},
-  carousel: {
-    backgroundColor: '#141518',
-    aspectRatio: 1.5,
-    flexGrow: 0,
-    marginBottom: 20,
-  },
-  item: {
-    borderWidth: 2,
-    backgroundColor: 'white',
-    flex: 1,
-    borderRadius: 5,
-    borderColor: 'white',
-    elevation: 3,
-  },
-  imageBackground: {
-    flex: 2,
-    backgroundColor: '#EBEBEB',
-    borderWidth: 5,
-    borderColor: 'white',
-  },
-  rightTextContainer: {
-    marginLeft: 'auto',
-    marginRight: -2,
-    backgroundColor: 'rgba(49, 49, 51,0.5)',
-    padding: 3,
-    marginTop: 3,
-    borderTopLeftRadius: 5,
-    borderBottomLeftRadius: 5,
-  },
-  rightText: {color: 'white'},
-  lowerContainer: {
-    flex: 1,
-    margin: 10,
-  },
-  titleText: {
-    fontWeight: 'bold',
-    fontSize: 18,
-  },
-  contentText: {
-    marginTop: 10,
-    fontSize: 12,
-  },
-});

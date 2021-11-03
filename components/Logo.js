@@ -1,6 +1,6 @@
-import  * as React from 'react';
-import { StyleSheet, Text, View, Image, Button } from 'react-native';
-import logo from '../assets/netthis-logo.png'; 
+import  * as React from 'react'
+import { StyleSheet, View, Image } from 'react-native'
+import logo from '../assets/netthis-logo.png'
 
 export default function Logo(){
     return(

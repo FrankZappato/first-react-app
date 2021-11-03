@@ -1,10 +1,10 @@
-import  * as React from 'react';
-import { StyleSheet, Text, View, Image, Button } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import Home from '../screens/Home';
-import SignUp from '../screens/SignUp';
-import Profile from '../screens/Profile';
+import  * as React from 'react'
+import { StyleSheet } from 'react-native'
+import { NavigationContainer } from '@react-navigation/native'
+import { createNativeStackNavigator } from '@react-navigation/native-stack'
+import Home from '../screens/Home'
+import SignUp from '../screens/SignUp'
+import Profile from '../screens/Profile'
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs'
 
 const Stack = createNativeStackNavigator();
