@@ -1,11 +1,9 @@
-
 import { StyleSheet } from 'react-native';
 
 export default  StyleSheet.create({     
     formContainer : {
-        margin : 20,
-        marginTop : 80,       
-        alignContent : 'center'
+        padding: 8,
+        height: '100%',
     },
     formInput : {
         borderWidth : 2,
