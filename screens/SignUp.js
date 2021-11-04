@@ -3,11 +3,11 @@ import { Text, View, SafeAreaView, ScrollView, Alert, TextInput } from 'react-na
 import { Button } from 'react-native-elements'
 import Logo from '../components/Logo'
 import { Input } from 'react-native-elements'
-import DateTimePicker from '@react-native-community/datetimepicker'
 import Spinner from 'react-native-loading-spinner-overlay'
 import moment from 'moment'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import styles from './styles/signUpStyle'
+import DatePicker from '../components/DatePicker'
 
 export default function SignUp ({navigation}){     
    const [state, setState] = useState({
@@ -17,15 +17,13 @@ export default function SignUp ({navigation}){
        edad : "",
        dni : ""
    });
-
    const [validations,setValid] = useState({ 
         isValidName : false,
         isValidLastName : false,
         isValidEmail : false,
         isValidDate : false,
         isValidDNI : false
-   });  
-   
+   });   
    /**
     * loading para el spinner.
     */
@@ -47,21 +45,16 @@ export default function SignUp ({navigation}){
     /**
      * DatePicker 
      */
-    const [date, setDate] = useState(new Date());    
-    const [show, setShow] = useState(false);
-   
-    const onChangeDate = (event, selectedDate) => {       
-        setShow(false);        
-        setDate(selectedDate);
-        setState({
-            ...state,
-            edad : moment(selectedDate).format('DD/MM/YYYY')
-        });
-        setValid({
-            ...validations,
-            isValidDate : true
-        })                    
-    };    
+      
+    const [show, setShow] = useState(false); 
+    const [fecha, setFecha] = useState('');   
+
+    const changeEdad = (selectedDate)=>{    
+        setState({...state, edad : moment(selectedDate).format('DD/MM/YYYY')});
+        setValid({...validations, isValidDate : true})  
+        setShow(false)   
+        console.log("selectedDate", selectedDate) 
+    }   
 
     /**
      * RegEx para filtrar y validar emails y DNI
@@ -76,10 +69,7 @@ export default function SignUp ({navigation}){
     * handler para modificar los valores del obj "state" desde los inputs del form
     */
    const handleInput = (val,key) =>{    
-        setState({
-            ...state,
-            [key] : val,               
-        });
+        setState({...state, [key] : val });
         validate(val,key);
    }
 
@@ -100,56 +90,31 @@ export default function SignUp ({navigation}){
 
    const checkNameInput = (val) =>{         
        if(val.lenght !== 0){
-           setValid({
-               ...validations,
-               isValidName : true
-           })
+           setValid({...validations,isValidName : true})
        }else{
-           setValid({
-               ...validations,
-               isValidName : false 
-           })
+           setValid({...validations,isValidName : false})
        }
    }
    const checkLastNameInput = (val) =>{       
        if(val.lenght !== 0){
-           setValid({
-               ...validations,
-               isValidLastName : true
-           })
+           setValid({...validations,isValidLastName : true})
        }else{
-           setValid({
-               ...validations,
-               isValidLastName : false 
-           })
+           setValid({...validations,isValidLastName : false})
        }
    }  
    
    const checkDNIInput = (val) =>{
         if(dniRegex.test(val)){
-            setValid({
-                ...validations,                
-                isValidDNI : true
-            })
+            setValid({...validations,isValidDNI : true})
         }else{
-            setValid({
-                ...validations,                
-                isValidDNI : false
-            })
+            setValid({...validations,isValidDNI : false})
         }
    }
    const checkEmailInput = (val)=>{
         if(emailRegex.test(val)){
-            setValid({
-                ...validations,
-                
-                isValidEmail : true
-            });
+            setValid({...validations,isValidEmail : true});
         }else{
-            setValid({
-                ...validations,                
-                isValidEmail : false
-            });
+            setValid({...validations,isValidEmail : false});
         }       
    }
 
@@ -238,20 +203,9 @@ export default function SignUp ({navigation}){
                         onPress={()=>setShow(true)} 
                     />
                 </View>
-            </View> 
-
-            <View>                           
-                {show && (
-                <DateTimePicker
-                    testID="dateTimePicker"
-                    value={date}
-                    mode={'calendar'}
-                    is24Hour={true}
-                    display="default"
-                    onChange={onChangeDate}
-                />
-                )}
-            </View>                    
+            </View>            
+                                      
+            <DatePicker show={show} changeEdad={changeEdad} setEdad={fecha} />                              
               
             <Input
                 label ="DNI"
