@@ -1,32 +1,30 @@
 import DateTimePicker from '@react-native-community/datetimepicker'
 import { View } from 'react-native'
-import React, { useState } from 'react'
-import { useEffect } from 'react';
+import React, { useState, useEffect } from 'react'
+import moment from 'moment';
 
-export default function DatePicker({show,changeEdad,fecha}){
-    const [date, setDate] = useState(new Date());
-    const onChangeDate = (event, selectedDate) => {                      
-        setDate(selectedDate);
-        changeEdad(selectedDate)
-                                         
+export default function DatePicker({ setDateSelected, setShowDate }){
+    const [dateDefault, setDateDefault] = useState(new Date());
+
+    const onChange = (event, selectedDate) => {
+        const currentDate = selectedDate || dateDefault;
+        setDateDefault(currentDate);
+        setDateSelected( moment(currentDate).format('DD/MM/YYYY') )
+        setShowDate(false)
     };
-    useEffect(()=>{
-        if(fecha === ''){
-            
-        }
-    },[])    
-  return(  
-    <View>                           
-        {show && (
+
+    useEffect(() => {
+
+    }, [])
+
+    return(  
         <DateTimePicker
             testID="dateTimePicker"
-            value={date}
-            mode={'calendar'}
+            value={dateDefault}
+            mode={'date'}
             is24Hour={true}
             display="default"
-            onChange={onChangeDate}
+            onChange={onChange}
         />
-        )}
-    </View> 
-  )
+    )
 } 
