@@ -6,7 +6,7 @@ import {
   Dimensions,
   ImageBackground,
 } from 'react-native'
-import styles from './carouselStyle'
+import styles from '../carousel/carouselStyle'
 
 import Carousel from 'react-native-anchor-carousel/src/carousel'
 

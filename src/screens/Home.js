@@ -5,7 +5,10 @@ import Logo from '../components/Logo'
 import ImageCarousel from '../components/carousel/ImageCarousel'
 import styles  from './styles/homeStyle'
 
-export default function Home({navigation}) {  
+export default function Home({...props}) {  
+
+  console.log('props desde Home > ', props)
+
   return (
     <ScrollView style={styles.container}>
       <View style={styles.headerContainer}>

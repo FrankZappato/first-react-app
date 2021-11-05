@@ -1,19 +1,6 @@
-import  * as React from 'react';
-import { StyleSheet } from 'react-native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs'
-
-import Navbar from './components/Navbar';
-
-
-const Stack = createNativeStackNavigator();
-const TopStack = createMaterialTopTabNavigator();
+import React from 'react';
+import MainNavigation from './src/components/Navigator/MainNavigator';
 
 export default function App() {
-  return (    
-    <Navbar/>
-  );
+  return <MainNavigation/>
 }
-
-const styles = StyleSheet.create({  
-});
