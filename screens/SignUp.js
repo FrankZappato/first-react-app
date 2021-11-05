@@ -47,12 +47,12 @@ export default function SignUp ({navigation}){
      */
       
     const [show, setShow] = useState(false); 
-    const [fecha, setFecha] = useState('');   
+    //const [fecha, setFecha] = useState('');   
 
-    const changeEdad = (selectedDate)=>{    
+    const changeEdad = (selectedDate)=>{         
         setState({...state, edad : moment(selectedDate).format('DD/MM/YYYY')});
-        setValid({...validations, isValidDate : true})  
-        setShow(false)   
+        setValid({...validations, isValidDate : true})
+        setShow(false)           
         console.log("selectedDate", selectedDate) 
     }   
 
@@ -205,7 +205,10 @@ export default function SignUp ({navigation}){
                 </View>
             </View>            
                                       
-            <DatePicker show={show} changeEdad={changeEdad} setEdad={fecha} />                              
+            {show ?
+             <DatePicker  changeEdad={changeEdad} /> 
+             : null
+            }                                       
               
             <Input
                 label ="DNI"
