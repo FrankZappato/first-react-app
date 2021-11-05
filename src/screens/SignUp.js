@@ -9,7 +9,8 @@ import styles from './styles/signUpStyle'
 import Spinner from 'react-native-loading-spinner-overlay'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
-export default function SignUp({navigation}) {
+export default function SignUp({...props}) {
+  console.log("PROPS DESDE SIGNUP",props)
   const[name, setName] = useState('')
   const[lastName, setLastname] = useState('')
   const[email, setMail] = useState('')
@@ -54,9 +55,7 @@ export default function SignUp({navigation}) {
     const startLoading = () => {
         setLoading(true);
         setTimeout(() => {
-            navigation.navigate('Sign Up', {
-                screen: 'Profile',
-                params: { data: {name,lastName,email,dateSelected,dni} },
+            props.navigation.navigate('Profile', { data: {name,lastName,email,dateSelected,dni} 
             })
             setLoading(false);
         }, 3000);

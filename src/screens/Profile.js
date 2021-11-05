@@ -2,7 +2,8 @@ import React from 'react'
 import { Button, Text, View } from 'react-native'
 import styles from './styles/profileStyle'
 
-const  Profile = ({route , navigation}) => {    
+const  Profile = ({route , navigation}) => { 
+    console.log("ROUTE PROFILE",route)   
     return (
         <View>
             <Button
