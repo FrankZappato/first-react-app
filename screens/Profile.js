@@ -12,23 +12,23 @@ const  Profile = ({route , navigation}) => {
             <View style={styles.profileData}>
                 <View style={styles.textContainer}>
                     <Text style={styles.profileText}>Nombre :</Text> 
-                    <Text> {route.params.data.state.nombre}</Text>
+                    <Text> {route.params.data.name}</Text>
                 </View>
                 <View style={styles.textContainer}>
                     <Text style={styles.profileText}>Apellido :</Text> 
-                    <Text>{route.params.data.state.apellido}</Text>
+                    <Text>{route.params.data.lastName}</Text>
                 </View>
                 <View style={styles.textContainer}>
                     <Text style={styles.profileText}>Email : </Text> 
-                    <Text> {route.params.data.state.email}</Text>
+                    <Text> {route.params.data.email}</Text>
                 </View>
                 <View style={styles.textContainer}>
                     <Text style={styles.profileText}>Edad : </Text> 
-                    <Text> {route.params.data.state.edad}</Text>
+                    <Text> {route.params.data.dateSelected}</Text>
                 </View>
                 <View style={styles.textContainer}>
                     <Text style={styles.profileText}>DNI :</Text> 
-                    <Text>{route.params.data.state.dni}</Text>    
+                    <Text>{route.params.data.dni}</Text>    
                 </View>            
             </View>
         </View>

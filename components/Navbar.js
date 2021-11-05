@@ -21,9 +21,7 @@ export default function Navbar({}) {
       </TopStack.Navigator>
     </NavigationContainer>   
     );
-  }  
-
-  
+  }   
   function stackSignUp(){
     return(
       <Stack.Navigator>

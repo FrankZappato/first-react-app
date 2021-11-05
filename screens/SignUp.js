@@ -6,17 +6,24 @@ import DatePicker from '../components/DatePicker'
 import Logo from '../components/Logo'
 import CommonStyles from './styles/CommonStyle'
 import styles from './styles/signUpStyle'
+import Spinner from 'react-native-loading-spinner-overlay'
+import { SafeAreaView } from 'react-native-safe-area-context'
 
-export default function SignUp() {
+export default function SignUp({navigation}) {
   const[name, setName] = useState('')
-  const[lastname, setLastname] = useState('')
-  const[mail, setMail] = useState('')
+  const[lastName, setLastname] = useState('')
+  const[email, setMail] = useState('')
   const[dni, setDni] = useState('')
 
-  const[dateSelected, setDateSelected] = useState('DD / mm / AAAA')
+  const[dateSelected, setDateSelected] = useState('DD / MM / AAAA')
   const[showDate, setShowDate] = useState(false)
+  
+   const [loading, setLoading] = useState(false)//loading para el spinner
 
-  const validate = (val,key)=>{
+  const emailRegex = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
+  const dniRegex = new RegExp(/^\d{8}(?:[-\s]\d{4})?$/);    
+
+  const handleInput = (val,key)=>{
     if(key === 'name'){
       setName(val)
     }
@@ -31,49 +38,59 @@ export default function SignUp() {
     }
   }
 
-  function validateDate(){
-    if(name.length < 8 ) {alert('pone bien tu nombre')}
-    if(mail.length < 8 ) {alert('pone bien tu mail')}
-
+  function validateData(){
+      let validForm = true;
+    if(name.length < 4 ) {alert('Nombre es un campo necesario'); validForm=false}
+    if(lastName.length < 4) {alert('Apellido es un campo necesario'); validForm=false}
+    if(email.length < 4 ) {alert('Email es un campo necesario'); validForm=false}
+    if(!emailRegex.test(email)) {alert('Email invalido'); validForm=false}
+    if(dni.length < 4) {alert('DNI es un campo necesario'); validForm=false}
+    if(!dniRegex.test(dni)) {alert('DNI es invalido'); validForm=false}
+    if(validForm){startLoading()}
+  }  
+   /**
+    * timeOut de 3 secs para navegar una ves validado que no haya errores en el form.
+    */
+    const startLoading = () => {
+        setLoading(true);
+        setTimeout(() => {
+            navigation.navigate('Sign Up', {
+                screen: 'Profile',
+                params: { data: {name,lastName,email,dateSelected,dni} },
+            })
+            setLoading(false);
+        }, 3000);
+    };
     
-  }
-
   return (
     <ScrollView style={[ styles.formContainer ]}>
       <View style={styles.headerContainer}>
           <Logo/>
-          <Text style={styles.title}>Sign up!</Text> 
-          <View>
-            <Text style={styles.title}>{name}</Text> 
-            <Text style={styles.title}>{lastname}</Text> 
-            <Text style={styles.title}>{dni}</Text> 
-            <Text style={styles.title}>{mail}</Text> 
-          </View>
+          <Text style={styles.title}>Sign up!</Text>           
       </View>
 
       <Input
         label='Nombre'
         placeholder="Nombre"
         style={styles.formInput}
-        onChangeText={(val)=>validate(val, 'name')}
+        onChangeText={(val)=>handleInput(val, 'name')}
       />
       <Input
         label="Apellido"
-        placeholder="Nombre"
+        placeholder="Apellido"
         style={styles.formInput}
-        onChangeText={(val)=>validate(val, 'apellido')}
+        onChangeText={(val)=>handleInput(val, 'apellido')}
       />
       <Input
         label="Email"
-        placeholder="Nombre"
+        placeholder="mail@mail.com"
         style={styles.formInput}
-        onChangeText={(val)=>validate(val, 'mail@mail.com')}
+        onChangeText={(val)=>handleInput(val, 'email')}
       />
 
       {showDate ? 
         <DatePicker
-          setDateSelected={setDateSelected}
-          dateSelected={dateSelected}
+          setDateSelected={setDateSelected}         
           setShowDate={setShowDate}
         />
         :null }
@@ -93,19 +110,30 @@ export default function SignUp() {
                 />
               </Text>
             </TouchableOpacity>
-          </View>
+          </View>          
 
           <Input
                 label ="DNI"
                 placeholder="  DNI"
                 style={styles.formInput}
-                onChangeText={(val)=>validate(val, 'dni')}
-                keyboardAppearance={'number'}
+                onChangeText={(val)=>handleInput(val, 'dni')}
+                keyboardAppearance={'dark'}
+                keyboardType={'numeric'}
             />          
-        <Button title="Registro" onPress={()=>validateDate()}/>
+        <Button title="Registro" onPress={()=>validateData()}/>
+
+        <SafeAreaView styles={{flex: 1}}>
+            <View style={styles.container}>
+                <Spinner                
+                visible={loading}                
+                textContent={'Loading...'}                
+                textStyle={{color :'#FFF'}}
+                />                
+            </View>
+        </SafeAreaView>
 
         <View style={CommonStyles.br}/>
 
-    </ScrollView>
+    </ScrollView>    
   )
 }
