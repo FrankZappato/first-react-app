@@ -10,9 +10,9 @@ export default function DatePicker({changeEdad}){
         setDate(currentDate);
         changeEdad(currentDate)                                            
     }; 
-    useEffect(() => {
+    /*useEffect(() => {
 
-    }, [])      
+    },[])      */
   return(    
     <DateTimePicker
         testID="dateTimePicker"
